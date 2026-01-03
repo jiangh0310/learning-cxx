@@ -9,7 +9,21 @@
 int main(int argc, char **argv) {
     std::vector<int> val{8, 13, 21, 34, 55};
     // TODO: 调用 `std::transform`，将 `v` 中的每个元素乘以 2，并转换为字符串，存入 `ans`
-    // std::vector<std::string> ans
+    std::vector<std::string> ans(5);
+    auto fc = [&](int x)->std::string {
+        std::string res;
+        int num=x*2;
+        while(num) {
+            res+=(num%10)+'0';
+            num/=10;
+        }
+        int len = res.size();
+        for(int i=0;i<len/2;i++) {
+            std::swap(res[i],res[len-i-1]);
+        }
+        return res;
+    };
+    std::transform(val.begin(),val.end(),ans.begin(),fc);
     ASSERT(ans.size() == val.size(), "ans size should be equal to val size");
     ASSERT(ans[0] == "16", "ans[0] should be 16");
     ASSERT(ans[1] == "26", "ans[1] should be 26");
